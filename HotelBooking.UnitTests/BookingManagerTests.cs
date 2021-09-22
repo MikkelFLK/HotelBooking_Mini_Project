@@ -51,6 +51,12 @@ namespace HotelBooking.UnitTests
         public void FindAvailableRoom_RoomAvailable_RoomIdNotMinusOne()
         {
             // Arrange
+            var rooms = new List<Room>
+            {
+                new Room { Id=1, Description="A" },
+                new Room { Id=2, Description="B" },
+            };
+            fakeRoomRepo.Setup(x => x.GetAll()).Returns(rooms);
             DateTime date = DateTime.Today.AddDays(1);
             // Act
             int roomId = bookingManager.FindAvailableRoom(date, date);
