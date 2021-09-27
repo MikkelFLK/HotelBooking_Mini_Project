@@ -48,6 +48,19 @@ namespace HotelBooking.UnitTests
         }
 
         [Fact]
+        public void FindAvailableRoom_StartDateInTheFuture()
+        {
+            //Arrange
+            DateTime startDate = DateTime.Today.AddDays(10);
+            DateTime endDate = DateTime.Today.AddDays(20);
+
+            var result = bookingManager.FindAvailableRoom(startDate, endDate);
+            // Assert
+            Assert.True(true, result.ToString());
+
+        }
+
+        [Fact]
         public void FindAvailableRoom_RoomAvailable_RoomIdNotMinusOne()
         {
             // Arrange
