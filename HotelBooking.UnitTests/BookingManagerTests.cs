@@ -199,6 +199,38 @@ namespace HotelBooking.UnitTests
             Assert.True(true, result.ToString());
         }
 
+        [Fact]
+        public void CreateBooking_InThePast()
+        {
+            //Arrange
+            DateTime date = DateTime.Today.AddDays(-1);
+            var room = new Room
+            {
+                Id = 1,
+                Description = "A"
+            };
 
+            var customer = new Customer
+            {
+                Id = 13,
+                Email = "casper@mail.com",
+                Name = "Casper"
+            };
+
+            var booking = new Booking
+            {
+                Customer = customer,
+                CustomerId = 13,
+                Id = 32,
+                EndDate = date,
+                StartDate = date,
+                IsActive = false,
+                Room = room,
+                RoomId = 1
+            };
+
+            //Assert
+            Assert.Throws<ArgumentException>(() => bookingManager.CreateBooking(booking));
+        }
     }
 }
