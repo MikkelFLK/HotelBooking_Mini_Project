@@ -160,7 +160,7 @@ namespace HotelBooking.UnitTests
             Assert.NotEqual(-1, roomId);
         }
 
-        /*
+
         [Fact]
         public void CreateBooking_CreatesABooking()
         {
@@ -311,6 +311,81 @@ namespace HotelBooking.UnitTests
 
             //Assert
             Assert.False(false, result.ToString());
-        }*/
+        }
+
+        [Fact]
+        public void GetOccupiedDates_GetOccupiedDateList()
+        {
+            DateTime startDate = DateTime.Today.AddDays(2);
+            DateTime endDate = DateTime.Today.AddDays(5);
+            //Arrange
+            var rooms = new List<Room>
+            {
+                new Room
+                {
+                    Id = 1,
+                    Description = "A"
+                },
+                new Room
+                {
+                    Id = 2,
+                    Description = "B"
+                }
+            };
+
+            var customers = new List<Customer>
+            {
+                new Customer
+                {
+                    Id = 13,
+                    Email = "casper@mail.com",
+                    Name = "Casper"
+                },
+                new Customer
+                {
+                    Id = 12,
+                    Email = "Pierre@mail.com",
+                    Name = "Pierre"
+                }
+            };
+
+            var bookings = new List<Booking>
+            {
+                new Booking
+                {
+                    CustomerId = 13,
+                    Id = 32,
+                    EndDate = endDate,
+                    StartDate = startDate,
+                    IsActive = true,
+                    RoomId = 1
+                },
+                new Booking
+                {
+                    CustomerId = 12,
+                    Id = 33,
+                    EndDate = endDate,
+                    StartDate = startDate,
+                    IsActive = true,
+                    RoomId = 2
+                }
+            };
+
+            var dates = new List<DateTime>
+            {
+                DateTime.Today.AddDays(2),
+                DateTime.Today.AddDays(3),
+                DateTime.Today.AddDays(4),
+                DateTime.Today.AddDays(5)
+            };
+            //Act
+            fakeRoomRepo.Setup(x => x.GetAll()).Returns(rooms);
+            fakeBookingRepo.Setup(x => x.GetAll()).Returns(bookings);
+
+            var result = bookingManager.GetFullyOccupiedDates(startDate, endDate);
+
+            //Assert
+            Assert.Equal(dates, result);
+        }
     }
 }
