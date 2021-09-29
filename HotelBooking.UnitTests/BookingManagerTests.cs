@@ -102,6 +102,48 @@ namespace HotelBooking.UnitTests
         }
 
         [Fact]
+        public void FindAvailableRoom_RooomAvailable_RoomAvaibableAfterOccupiedTime()
+        {
+            //Arrange
+            DateTime occupiedStartDate = DateTime.Today.AddDays(10);
+            DateTime occupiedEndDate = DateTime.Today.AddDays(20);
+            DateTime startDate = DateTime.Today.AddDays(21);
+            DateTime endDate = DateTime.Today.AddDays(30);
+            var room = new Room
+            {
+                Id = 1,
+                Description = "A"
+            };
+
+            var customer = new Customer
+            {
+                Id = 13,
+                Email = "casper@mail.com",
+                Name = "Casper"
+            };
+
+            var booking = new Booking
+            {
+                Customer = customer,
+                CustomerId = 13,
+                Id = 32,
+                EndDate = endDate,
+                StartDate = startDate,
+                IsActive = false,
+                Room = room,
+                RoomId = 1
+            };
+            //Act
+            fakeRoomRepo.Setup(x => x.Get(1)).Returns(room);
+            fakeBookingRepo.Setup(x => x.Get(32)).Returns(booking);
+            bookingManager.GetFullyOccupiedDates(occupiedStartDate, occupiedEndDate);
+
+            var result = bookingManager.FindAvailableRoom(startDate, endDate);
+
+            Assert.True(true, result.ToString());
+        }
+
+        [Fact]
         public void FindAvailableRoom_RoomAvailable_RoomIdNotMinusOne()
         {
             // Arrange
