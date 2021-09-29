@@ -61,6 +61,12 @@ namespace HotelBooking.UnitTests
         }
 
         [Fact]
+        public void FindAvailableRoom_RoomOccupiedDate()
+        {
+
+        }
+
+        [Fact]
         public void FindAvailableRoom_RoomAvailable_RoomIdNotMinusOne()
         {
             // Arrange
