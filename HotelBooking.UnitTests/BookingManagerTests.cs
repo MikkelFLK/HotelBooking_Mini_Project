@@ -160,5 +160,45 @@ namespace HotelBooking.UnitTests
             Assert.NotEqual(-1, roomId);
         }
 
+        [Fact]
+        public void CreateBooking_CreatesABooking()
+        {
+
+            //Arrange
+            DateTime startDate = DateTime.Today.AddDays(21);
+            DateTime endDate = DateTime.Today.AddDays(30);
+            var room = new Room
+            {
+                Id = 1,
+                Description = "A"
+            };
+
+            var customer = new Customer
+            {
+                Id = 13,
+                Email = "casper@mail.com",
+                Name = "Casper"
+            };
+
+            var booking = new Booking
+            {
+                Customer = customer,
+                CustomerId = 13,
+                Id = 32,
+                EndDate = endDate,
+                StartDate = startDate,
+                IsActive = false,
+                Room = room,
+                RoomId = 1
+            };
+
+            //Act
+            var result = bookingManager.CreateBooking(booking);
+
+            //Assert
+            Assert.True(true, result.ToString());
+        }
+
+
     }
 }
