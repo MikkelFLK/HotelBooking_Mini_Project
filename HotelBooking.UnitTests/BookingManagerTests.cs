@@ -160,6 +160,7 @@ namespace HotelBooking.UnitTests
             Assert.NotEqual(-1, roomId);
         }
 
+        /*
         [Fact]
         public void CreateBooking_CreatesABooking()
         {
@@ -232,5 +233,84 @@ namespace HotelBooking.UnitTests
             //Assert
             Assert.Throws<ArgumentException>(() => bookingManager.CreateBooking(booking));
         }
+
+        [Fact]
+        public void CreateBooking_InTheFuture()
+        {
+            //Arrange
+            DateTime startDate = DateTime.Today.AddDays(7);
+            DateTime endDate = DateTime.Today.AddDays(10);
+            var room = new Room
+            {
+                Id = 1,
+                Description = "A"
+            };
+
+            var customer = new Customer
+            {
+                Id = 13,
+                Email = "casper@mail.com",
+                Name = "Casper"
+            };
+
+            var booking = new Booking
+            {
+                Customer = customer,
+                CustomerId = 13,
+                Id = 32,
+                EndDate = endDate,
+                StartDate = startDate,
+                IsActive = false,
+                Room = room,
+                RoomId = 1
+            };
+
+            //Act
+            var result = bookingManager.CreateBooking(booking);
+
+            //Arrange
+            Assert.True(true, result.ToString());
+        }
+
+        [Fact]
+        public void CreateBooking_OccupiedBookingDates()
+        {
+            //Arrange
+            DateTime startDate = DateTime.Today.AddDays(10);
+            DateTime endDate = DateTime.Today.AddDays(20);
+            var room = new Room
+            {
+                Id = 1,
+                Description = "A"
+            };
+
+            var customer = new Customer
+            {
+                Id = 13,
+                Email = "casper@mail.com",
+                Name = "Casper"
+            };
+
+            var booking = new Booking
+            {
+                Customer = customer,
+                CustomerId = 13,
+                Id = 32,
+                EndDate = endDate,
+                StartDate = startDate,
+                IsActive = true,
+                Room = room,
+                RoomId = 1
+            };
+            //Act
+            fakeRoomRepo.Setup(x => x.Get(1)).Returns(room);
+            fakeBookingRepo.Setup(x => x.Get(32)).Returns(booking);
+            bookingManager.GetFullyOccupiedDates(startDate, endDate);
+
+            var result = bookingManager.CreateBooking(booking);
+
+            //Assert
+            Assert.False(false, result.ToString());
+        }*/
     }
 }
