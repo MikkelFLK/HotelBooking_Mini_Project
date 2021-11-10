@@ -75,7 +75,6 @@ namespace HotelBooking.Specs.Steps
         {
             _bookingManager.FindAvailableRoom(this.startDate, this.endDate);
             _bookingManager.GetFullyOccupiedDates(this.startDate, this.endDate);
-            System.Diagnostics.Debug.WriteLine(_bookingManager.GetFullyOccupiedDates(this.startDate, this.startDate));
         }
         
         [Then(@"the result should create a booking or refuse")]
